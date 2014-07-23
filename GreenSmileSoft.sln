@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{5D853279-6E49-4D49-9689-515537CEE7AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenSmileSoft.Library.Wpf", "GreenSmileSoft.Library.Wpf\GreenSmileSoft.Library.Wpf.csproj", "{BE2EE5EE-C6D1-4408-99E4-E672D5D4449A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenSmileSoft.Library.Util", "GreenSmileSoft.Library.Util\GreenSmileSoft.Library.Util.csproj", "{5A26579A-663D-49A8-B1A4-46FC257AC900}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net", "Net", "{F9C5092B-F2A9-46A5-B03B-6C73B5287E07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenSmileSoft.Net.Http", "GreenSmileSoft.Net.Http\GreenSmileSoft.Net.Http.csproj", "{847DD7A5-2BAF-4718-84F4-40937CEF15A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetHost", "AspNetHost\AspNetHost.csproj", "{CF47459C-CE8B-4C6C-86F0-8AA0F315867D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE2EE5EE-C6D1-4408-99E4-E672D5D4449A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2EE5EE-C6D1-4408-99E4-E672D5D4449A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2EE5EE-C6D1-4408-99E4-E672D5D4449A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2EE5EE-C6D1-4408-99E4-E672D5D4449A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A26579A-663D-49A8-B1A4-46FC257AC900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A26579A-663D-49A8-B1A4-46FC257AC900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A26579A-663D-49A8-B1A4-46FC257AC900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A26579A-663D-49A8-B1A4-46FC257AC900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{847DD7A5-2BAF-4718-84F4-40937CEF15A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{847DD7A5-2BAF-4718-84F4-40937CEF15A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{847DD7A5-2BAF-4718-84F4-40937CEF15A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{847DD7A5-2BAF-4718-84F4-40937CEF15A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF47459C-CE8B-4C6C-86F0-8AA0F315867D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF47459C-CE8B-4C6C-86F0-8AA0F315867D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF47459C-CE8B-4C6C-86F0-8AA0F315867D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF47459C-CE8B-4C6C-86F0-8AA0F315867D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE2EE5EE-C6D1-4408-99E4-E672D5D4449A} = {5D853279-6E49-4D49-9689-515537CEE7AD}
+		{5A26579A-663D-49A8-B1A4-46FC257AC900} = {5D853279-6E49-4D49-9689-515537CEE7AD}
+		{847DD7A5-2BAF-4718-84F4-40937CEF15A2} = {F9C5092B-F2A9-46A5-B03B-6C73B5287E07}
+		{CF47459C-CE8B-4C6C-86F0-8AA0F315867D} = {F9C5092B-F2A9-46A5-B03B-6C73B5287E07}
+	EndGlobalSection
+EndGlobal

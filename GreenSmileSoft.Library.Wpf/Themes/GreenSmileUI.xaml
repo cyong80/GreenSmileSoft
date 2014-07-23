@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Assets/TextBoxEx.xaml" />
+        <ResourceDictionary Source="../Assets/PasswordBoxEx.xaml" />
+        <ResourceDictionary Source="../Assets/ModernProgressRing.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
