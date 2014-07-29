@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.8.3\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -43,8 +46,14 @@
     <Compile Include="Attributes\Mapping.cs" />
     <Compile Include="Converters\DataTableToListConverter.cs" />
     <Compile Include="CSV\CSVLoader.cs" />
+    <Compile Include="DBS\DBFactory.cs" />
     <Compile Include="Event\EventManagerEx.cs" />
+    <Compile Include="NotifyPropertyChanged.cs" />
+    <Compile Include="ProcessEnvironment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

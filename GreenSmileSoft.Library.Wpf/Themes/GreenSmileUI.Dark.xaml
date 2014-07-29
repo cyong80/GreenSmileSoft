@@ -10,14 +10,13 @@
 
     <!-- specify the accent color (optional) -->
     <Color x:Key="AccentColor">#48A93F</Color>
-    <Color x:Key="WindowBackgroundColor">#A6A8AD</Color>
+    <Color x:Key="WindowBackgroundColor">#1F1F1F</Color>
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}" />
 
     <!-- custom theme resources-->
     <Rectangle x:Key="WindowBackgroundContent" x:Shared="false">
         <Rectangle.Fill>
-            <SolidColorBrush Color="{StaticResource WindowBackgroundColor}" />
+            <SolidColorBrush Color="{DynamicResource WindowBackgroundColor}" />
         </Rectangle.Fill>
     </Rectangle>
-
 </ResourceDictionary>

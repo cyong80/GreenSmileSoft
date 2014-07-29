@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetServer.cs" />
+    <Compile Include="DBService\DBRequest.cs" />
+    <Compile Include="HttpRequest.cs" />
     <Compile Include="HttpServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +50,10 @@
     <ProjectReference Include="..\AspNetHost\AspNetHost.csproj">
       <Project>{cf47459c-ce8b-4c6c-86f0-8aa0f315867d}</Project>
       <Name>AspNetHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenSmileSoft.Library.Util\GreenSmileSoft.Library.Util.csproj">
+      <Project>{5a26579a-663d-49a8-b1a4-46fc257ac900}</Project>
+      <Name>GreenSmileSoft.Library.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

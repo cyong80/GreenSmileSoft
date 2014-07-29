@@ -4,5 +4,6 @@
         <ResourceDictionary Source="../Assets/TextBoxEx.xaml" />
         <ResourceDictionary Source="../Assets/PasswordBoxEx.xaml" />
         <ResourceDictionary Source="../Assets/ModernProgressRing.xaml" />
+        <ResourceDictionary Source="../Assets/DisableMenuWindow.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

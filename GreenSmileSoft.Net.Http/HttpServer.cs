@@ -13,6 +13,21 @@ namespace GreenSmileSoft.Net.Http
     public class HttpServer
     {
         private HttpListener listener;
+        public bool IsBusy
+        {
+            get
+            {
+                if(listener!=null)
+                {
+                    return listener.IsListening;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+        }
         public Route[] Routes = { };
         public HttpServer(string host, string port, AuthenticationSchemes auth)
         {
@@ -45,11 +60,45 @@ namespace GreenSmileSoft.Net.Http
                 listener.Close();
             }
         }
+        public static Route ServerAction(string path, Func<string,byte[]> action)
+        {
+            return new Route(path, ctx =>
+            {
+                Console.WriteLine("ServerAction : " + path);
+                string post = "";
+                using(var body = ctx.Request.InputStream)
+                {
+                    using(var reader = new StreamReader(body,Encoding.UTF8))
+                    {
+                        post = reader.ReadToEnd();
+                    }
+                }
+                byte[] bytes = action(post);
+                ctx.Response.ContentLength64 = bytes.Length;
+                ctx.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                ctx.Response.OutputStream.Close();
+                ctx.Response.Close();
+            });
+        }
+
+        public static Route ServerAction(string path, Func<byte[]> action)
+        {
+            return new Route(path, ctx =>
+            {
+                Console.WriteLine("ServerAction : " + path);
+                byte[] bytes = action();
+                ctx.Response.ContentLength64 = bytes.Length;
+                ctx.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                ctx.Response.OutputStream.Close();
+                ctx.Response.Close();
+            });
+        }
 
         public static Route ServerError(string path, int errorCode, string content)
         {
             return new Route(path, ctx =>
             {
+                Console.WriteLine("ServerError : " + path);
                 ctx.Response.StatusCode = errorCode;
                 ctx.Response.StatusDescription = content;
                 byte[] buffer = System.Text.Encoding.UTF8.GetBytes(content);
@@ -63,6 +112,7 @@ namespace GreenSmileSoft.Net.Http
         {
             return new Route(virtualPath, ctx =>
             {
+                Console.WriteLine("ServerFolder : " + virtualPath);
                 var phys = ctx.Request.RawUrl.Replace(virtualPath, physicalPath);
                 if (!File.Exists(phys))
                 {
@@ -94,6 +144,8 @@ namespace GreenSmileSoft.Net.Http
                     return "image/jpg";
                 case ".css":
                     return "text/css";
+                case ".json":
+                    return "Application/json";
                 default:
                     return "application/octet-stream";
             }

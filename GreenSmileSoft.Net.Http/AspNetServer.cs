@@ -11,6 +11,10 @@ using System.Web.Hosting;
 
 namespace GreenSmileSoft.Net.Http
 {
+    using GreenSmileSoft.Library.Util.DBS;
+    using GreenSmileSoft.Net.Http.DBService;
+    using System.Data;
+    using System.Runtime.Serialization.Formatters.Binary;
     using Route = KeyValuePair<string, Action<System.Net.HttpListenerContext>>;
     public class AspNetServer : HttpServer
     {
@@ -21,11 +25,57 @@ namespace GreenSmileSoft.Net.Http
             msh = (SimpleHost)ApplicationHost.CreateApplicationHost(typeof(SimpleHost), "/", rootpath);
         }
 
+        public static Route ServerDB(string DBExecutePath, Dictionary<string,IDbConnection> dbConnections)
+        {
+            return new Route(DBExecutePath, ctx =>
+            {
+                string post = "";
+                using (var body = ctx.Request.InputStream)
+                {
+                    var formatter = new BinaryFormatter();
+                    body.Seek(0, SeekOrigin.Begin);
+                    var request = (DBRequest)formatter.Deserialize(body);
+                    if(dbConnections.ContainsKey(request.Key))
+                    {
+                        try
+                        {
+                            dbConnections[request.Key].Open();
+                            using (DBFactory dbFactory = new DBFactory(dbConnections[request.Key]))
+                            {
+                                DataSet ds = new DataSet();
+                                if (request.Parameters != null)
+                                {
+                                    dbFactory.SetParameters(request.Parameters);
+                                }
+                                dbFactory.DbDataAdapter.Fill(ds);
+                                using (var stream = new MemoryStream())
+                                {
+                                    var rsformatter = new BinaryFormatter();
+                                    formatter.Serialize(stream, ds);
+                                    var bytes = new byte[stream.Length];
+                                    stream.Seek(0, SeekOrigin.Begin);
+                                    stream.Read(bytes, 0, (int)stream.Length);
+                                    
+                                    ctx.Response.ContentLength64 = bytes.Length;
+                                    ctx.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                                    ctx.Response.OutputStream.Close();
+                                    ctx.Response.Close();
+                                }
+                                
+                            }
+                        }
+                        catch { }
+                    }
+                    
+                }
+            });
+        }
         public static Route ServerFolder(string virtualPath, string physicalPath)
         {
             return new Route(virtualPath, ctx =>
             {
-                var phys = ctx.Request.RawUrl.Replace(virtualPath, physicalPath);
+                var phys = ctx.Request.RawUrl.Replace(virtualPath, physicalPath + @"\");
+                Console.WriteLine(phys);
                 if (!File.Exists(phys))
                 {
                     ServerError("", 404, "Not Found").Value(ctx);
