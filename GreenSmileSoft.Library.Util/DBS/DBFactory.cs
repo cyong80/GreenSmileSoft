@@ -22,6 +22,13 @@ namespace GreenSmileSoft.Library.Util.DBS
         private DBServerType DBServer = DBServerType.DEFAULT;
         private bool isDisposing;
 
+        public IDbCommand Command
+        {
+            get
+            {
+                return command;
+            }
+        }
         public IDbDataAdapter DbDataAdapter
         {
             get
@@ -44,7 +51,16 @@ namespace GreenSmileSoft.Library.Util.DBS
         {
             
             this.connection = conn;
+            this.setDBType();
             this.setCommand();
+        }
+
+        private void setDBType()
+        {
+            if(connection is MySqlConnection)
+            {
+                DBServer = DBServerType.MYSQL;
+            }
         }
 
         private void setCommand()
@@ -67,7 +83,7 @@ namespace GreenSmileSoft.Library.Util.DBS
             this.command.Connection = this.connection;
         }
 
-        public void SetParameters(List<KeyValuePair<string,object>> parameters)
+        public void SetParameters(List<KeyValuePair<string, object>> parameters)
         { 
             if(parameters == null)
             {
@@ -77,7 +93,7 @@ namespace GreenSmileSoft.Library.Util.DBS
 
             if(this.command.CommandType == CommandType.StoredProcedure)
             {
-                foreach(KeyValuePair<string,object> p in parameters)
+                foreach(var p in parameters)
                 {
                     addProcParameter(p.Key, p.Value);
                 }

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AspNetServer.cs" />
     <Compile Include="DBService\DBRequest.cs" />
+    <Compile Include="GreenSmileCredentials.cs" />
     <Compile Include="HttpRequest.cs" />
     <Compile Include="HttpServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

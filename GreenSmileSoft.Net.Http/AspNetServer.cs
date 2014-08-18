@@ -33,8 +33,9 @@ namespace GreenSmileSoft.Net.Http
                 using (var body = ctx.Request.InputStream)
                 {
                     var formatter = new BinaryFormatter();
-                    body.Seek(0, SeekOrigin.Begin);
-                    var request = (DBRequest)formatter.Deserialize(body);
+                    //body.Seek(0, SeekOrigin.Begin);
+                    var requests = (DBRequest[])formatter.Deserialize(body);
+                    var request = requests[0];
                     if(dbConnections.ContainsKey(request.Key))
                     {
                         try
@@ -43,9 +44,11 @@ namespace GreenSmileSoft.Net.Http
                             using (DBFactory dbFactory = new DBFactory(dbConnections[request.Key]))
                             {
                                 DataSet ds = new DataSet();
+                                dbFactory.Command.CommandText = request.QueryString;
+                                dbFactory.Command.CommandType = request.QueryType;
                                 if (request.Parameters != null)
                                 {
-                                    dbFactory.SetParameters(request.Parameters);
+                                    dbFactory.SetParameters((from p in request.Parameters select new KeyValuePair<string, object>(p.Name, p.Value)).ToList());
                                 }
                                 dbFactory.DbDataAdapter.Fill(ds);
                                 using (var stream = new MemoryStream())
@@ -61,10 +64,17 @@ namespace GreenSmileSoft.Net.Http
                                     ctx.Response.OutputStream.Close();
                                     ctx.Response.Close();
                                 }
-                                
                             }
+                            dbConnections[request.Key].Close();
                         }
-                        catch { }
+                        catch(Exception ex) 
+                        {
+                            if (dbConnections[request.Key].State == ConnectionState.Open)
+                            {
+                                dbConnections[request.Key].Close();
+                            }
+                            Console.WriteLine(ex.StackTrace);
+                        }
                     }
                     
                 }

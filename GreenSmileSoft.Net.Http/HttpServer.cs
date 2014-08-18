@@ -12,6 +12,18 @@ namespace GreenSmileSoft.Net.Http
     using Route = KeyValuePair<string, Action<System.Net.HttpListenerContext>>;
     public class HttpServer
     {
+        private Dictionary<string, string> auths = new Dictionary<string, string>();
+        public Dictionary<string,string> Auths
+        {
+            private get
+            {
+                return auths;
+            }
+            set
+            {
+                auths = value;
+            }
+        }
         private HttpListener listener;
         public bool IsBusy
         {
@@ -36,9 +48,28 @@ namespace GreenSmileSoft.Net.Http
             listener.Prefixes.Add(string.Format("http://{0}:{1}/",host, port));
             listener.AuthenticationSchemes = auth;
         }
+
         public void AcceptOne()
         {
             var ctx = listener.GetContext();
+            if(listener.AuthenticationSchemes == AuthenticationSchemes.Basic)
+            {
+                bool credentials = false;
+                HttpListenerBasicIdentity identity = (HttpListenerBasicIdentity)ctx.User.Identity;
+                if(auths.ContainsKey(identity.Name))
+                {
+                    if(auths[identity.Name] == identity.Password)
+                    {
+                        credentials = true;
+                    }
+                }
+                if(!credentials)
+                {
+                    ctx.Response.Close();
+                    return;
+                }
+            }
+
             try
             {
                 var route = Routes.First(r => ctx.Request.RawUrl.StartsWith(r.Key));
@@ -57,6 +88,7 @@ namespace GreenSmileSoft.Net.Http
         {
             if (listener != null)
             {
+                auths.Clear();
                 listener.Close();
             }
         }

@@ -29,7 +29,7 @@ namespace GreenSmileSoft.Library.Util.Converters
                     {
                         continue;
                     }
-                    property.SetValue(item, row[attrMapping.Name], null);
+                    SetProperty<T>(item, property, row[attrMapping.Name]);
                 }
                 else
                 {
@@ -37,10 +37,22 @@ namespace GreenSmileSoft.Library.Util.Converters
                     {
                         continue;
                     }
-                    property.SetValue(item, row[property.Name], null);
+                    SetProperty<T>(item, property, row[property.Name]);
                 }
             }
             return item;
+        }
+
+        private static void SetProperty<T>(T item, PropertyInfo property, object newValue) where T : new()
+        {
+            if (property.GetType() != newValue.GetType())
+            {
+                property.SetValue(item, Convert.ChangeType(newValue, property.PropertyType, null));
+            }
+            else
+            {
+                property.SetValue(item, newValue);
+            }
         }
     }
 }

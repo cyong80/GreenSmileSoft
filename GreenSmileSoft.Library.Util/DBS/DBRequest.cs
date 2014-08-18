@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GreenSmileSoft.Net.Http.DBService
+namespace GreenSmileSoft.Library.Util.DBS
 {
     [Serializable]
     public class DBRequest
