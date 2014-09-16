@@ -42,7 +42,7 @@ namespace GreenSmileSoft.Library.Network.Http
             }
             catch (Exception ex)
             {
-
+                Error(ex.ToString());
             }
         }
 
@@ -53,10 +53,11 @@ namespace GreenSmileSoft.Library.Network.Http
             {
                 if (getTask.IsCanceled)
                 {
-
+                    Error("canceled");
                 }
                 else if (getTask.IsFaulted)
                 {
+                    Error("IsFaulted : " + getTask.Exception.ToString());
                 }
                 else
                 {
@@ -83,6 +84,10 @@ namespace GreenSmileSoft.Library.Network.Http
                 }
                 else
                 {
+                    if(server.InnerHandler != null)
+                    {
+                        server.InnerHandler.Dispose();
+                    }
                     server.Dispose();
                     IsBusy = false;
                     OnPropertyChanged("IsBusy");
@@ -91,6 +96,11 @@ namespace GreenSmileSoft.Library.Network.Http
             });
         }
         public virtual void OnStop()
+        {
+
+        }
+
+        public virtual void Error(string error)
         {
 
         }

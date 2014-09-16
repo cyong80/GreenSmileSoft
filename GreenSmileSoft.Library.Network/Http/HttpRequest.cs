@@ -137,6 +137,11 @@ namespace GreenSmileSoft.Library.Network.Http
                     }
                     else
                     {
+                        if(postTask.Result.StatusCode != System.Net.HttpStatusCode.OK)
+                        {
+                            errorCallback(postTask.Result.StatusCode.ToString(), null);
+                            return;
+                        }
                         try
                         {
                             Task<T2> task = postTask.Result.Content.ReadAsAsync<T2>();
@@ -200,6 +205,12 @@ namespace GreenSmileSoft.Library.Network.Http
                     {
                         try
                         {
+                            if (postTask.Result.StatusCode != System.Net.HttpStatusCode.OK)
+                            {
+                                errorCallback(postTask.Result.StatusCode.ToString(), null);
+                                return;
+                            }
+
                             using (var stream = new MemoryStream())
                             {
                                 postTask.Result.Content.CopyToAsync(stream).Wait();
